@@ -29,6 +29,7 @@
 
 package ar.com.fdvs.dj.test;
 
+import ar.com.fdvs.dj.test.domain.BasicEntity;
 import ar.com.fdvs.dj.test.domain.Product;
 import ar.com.fdvs.dj.util.SortUtils;
 
@@ -209,7 +210,7 @@ public class TestRepositoryProducts {
 
 		return col;
 	}
-	
+
 	public static List getDummyCollectionSmall(){
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat();
@@ -240,7 +241,24 @@ public class TestRepositoryProducts {
 		List list = getDummyCollection();
 		return SortUtils.sortCollection(list, new String[]{"state","branch","item"});
 		
-	}	
+	}
+
+    public static List getNestedEntitiesCollection() {
+
+        List deeplyNestedList = new ArrayList();
+        BasicEntity l3 = new BasicEntity("Sub-Sub-Element");
+        deeplyNestedList.add(l3);
+        List nestedList = new ArrayList();
+        BasicEntity l2 = new BasicEntity("Sub-Element", deeplyNestedList);
+        nestedList.add(l2);
+        List mainList = new ArrayList();
+        BasicEntity l1 = new BasicEntity("Top Element", nestedList);
+
+        mainList.add(l1);
+
+        return mainList;
+
+    }
 	
 	public static void main(String[] args) {
 		System.out.println(getDummyCollectionSorted1());
